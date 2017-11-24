@@ -245,15 +245,18 @@ check_quota(TxnAmt, {AccToday, AccMonth}, {TxnQuota, DailyQuota, MonthlyQuota})
 
 acc_index_today(MchtId, TxnType) ->
   Today = xfutils:today(),
-  <<Month:6/bytes, _/binary>> = Today,
-  IndexToday = {MchtId, TxnType, Today},
+  acc_index(MchtId, TxnType, Today).
+acc_index(MchtId, TxnType, Date) ->
+  <<Month:6/bytes, _/binary>> = Date,
+  IndexToday = {MchtId, TxnType, Date},
   IndexMonth = {MchtId, TxnType, Month},
   {IndexToday, IndexMonth}.
 
 update_acc(MchtId, TxnType, TxnDate, Amt)
   when is_integer(MchtId), is_binary(TxnDate), is_integer(Amt) ->
 
-  {AccIndexToday, AccIndexMonth} = acc_index_today(MchtId, TxnType),
+%%  {AccIndexToday, AccIndexMonth} = acc_index_today(MchtId, TxnType),
+  {AccIndexToday, AccIndexMonth} = acc_index(MchtId, TxnType, TxnDate),
 
   MRepoAcc = pg_quota:repo_module(mcht_txn_acc),
   {ok, AccToday} = pg_repo:fetch(MRepoAcc, AccIndexToday),
