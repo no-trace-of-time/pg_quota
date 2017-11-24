@@ -1,16 +1,21 @@
 {application, pg_quota,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, { pg_quota_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
+  [{description, "An OTP application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {pg_quota_app, []}},
+    {applications,
+      [kernel,
+        stdlib
+      ]},
+    {env, [
+      {mcht_repo_name, repo_mchants_pt}
+      , {mcht_txn_acc_repo_name, repo_mcht_txn_acc_pt}
+      , {default_pay_amt_limit, -1}
+      , {default_collect_amt_limit, 200000}
+    ]},
+    {modules, []},
 
-  {maintainers, []},
-  {licenses, ["Apache 2.0"]},
-  {links, []}
- ]}.
+    {maintainers, []},
+    {licenses, ["Apache 2.0"]},
+    {links, []}
+  ]}.
