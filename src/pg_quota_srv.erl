@@ -287,6 +287,8 @@ update_acc([Acc], _AccIndex, Amt) ->
 acc_test_1() ->
   MMchtAcc = pg_quota:repo_module(mcht_txn_acc),
   Today = xfutils:today(),
+  ?assertEqual(pass, check(1, collect, 3700)),
+
   update(1, collect, Today, 50),
   update(1, collect, Today, 150),
 
